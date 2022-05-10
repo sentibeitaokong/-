@@ -1,3 +1,1 @@
-# -这个可以有
-asdsada
-
+手写Promise
