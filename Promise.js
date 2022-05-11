@@ -152,7 +152,9 @@ class MyPromise{
         return new MyPromise((resolve,reject)=> {
             let resultArr = []
             let orderIndex = 0;
-            values=Array.isArray(values)?values:[]
+            if (!isIterable(values)) {
+                    throw new TypeError(`${values} is not iterable (cannot read property Symbol(Symbol.iterator))`);
+            }
             let len=values.length
             if(len===0){
                 resolve([])
@@ -165,7 +167,7 @@ class MyPromise{
                 }
             }
             values.forEach((value,i)=>{
-                if(value && typeof value.then === 'function'){
+                if(isPromise(value)){
                     value.then(value=>{
                         processResultByKey(value,i)
                     },reject)
@@ -178,26 +180,46 @@ class MyPromise{
     static any(values){
         return new MyPromise((resolve,reject)=>{
             let count=0
-            if(values.length===0){
-                reject(new Error('All promises were rejected'))
+            let len=values.length
+            if(len===0){
+                resolve([])
+            }
+            if (!isIterable(values)) {
+                throw new TypeError(`${values} is not iterable (cannot read property Symbol(Symbol.iterator))`);
             }
             values.forEach((item,i)=>{
-                item.then(value=>{
+                if(isPromise(item)){
+                    item.then(resolve,reject=>{
+                        count++
+                        if(count===values.length){
+                            reject(new Error('All promises were rejected'))
+                        }
+                    })
+                }else{
+                    resolve(item);
+                }
+                /*item.then(value=>{
                     resolve(value)
                 },reason=>{
                     count++
                     if(count===values.length){
                         reject(new Error('All promises were rejected'))
                     }
-                })
+                })*/
             })
         })
     }
     static race(values){
         return new MyPromise((resolve,reject)=>{
-            values=Array.isArray(values)?values:[]
+            if (!isIterable(values)) {
+                throw new TypeError(`${values} is not iterable (cannot read property Symbol(Symbol.iterator))`);
+            }
             values.forEach(value=>{
-                value.then(resolve,reject)
+                if(isPromise(value)){
+                    value.then(resolve,reject)
+                }else{
+                    resolve(value);
+                }
             })
         })
     }
@@ -213,7 +235,9 @@ class MyPromise{
         return new MyPromise((resolve,reject)=>{
             const result=[]
             let count=0
-            values=Array.isArray(values)?values:[]
+            if (!isIterable(values)) {
+                throw new TypeError(`${values} is not iterable (cannot read property Symbol(Symbol.iterator))`);
+            }
             let len=values.length
             if(len===0){
                 resolve([])
@@ -230,7 +254,7 @@ class MyPromise{
             }
 
             values.forEach((item,i)=>{
-                if(item && typeof item.then === 'function'){
+                if(isPromise(item)){
                     item.then(res=>{
                         addData('Fulfilled',res,i)
                     },reason=>{
@@ -242,5 +266,15 @@ class MyPromise{
             })
         })
     }
+}
+function isPromise (x) {
+  if ((typeof x === 'object' && x !== null) || typeof x === 'function') {
+    let then = x.then;
+    return typeof then === 'function';
+  }
+  return false;
+}
+function isIterable (value) {
+  return value !== null && value !== undefined && typeof value[Symbol.iterator] === 'function';
 }
 module.exports=MyPromise

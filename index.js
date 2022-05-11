@@ -46,9 +46,10 @@ const resolved = MyPromise.resolve(1);
 const rejected = MyPromise.reject(-1);
 const resolved1 = MyPromise.resolve(17);
 
-const p = MyPromise.any([]);
+// const p = Promise.race([rejected,resolved,resolved1]);
+const p = MyPromise.allSettled([resolved,resolved1,rejected]);
 p.then((result) => {
-    console.log('result1', result)
+    console.log('result', result)
 }).catch(err => {
     console.log('err1', err)
 }).finally((res) => {
