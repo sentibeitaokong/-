@@ -1,9 +1,11 @@
-const MyPromise=require('./Promise')
+
+//  promise 测试
+/*const MyPromise=require('./Promise')
 let promise=new MyPromise((resolve,reject)=>{   //executor执行器
     resolve('promise1')
-   /* setTimeout(()=>{
+   /!* setTimeout(()=>{
         resolve('success')
-    },2000)*/
+    },2000)*!/
 });
 let promise2=promise.then((value)=>{
     // return new Error('Error')
@@ -23,14 +25,14 @@ let promise2=promise.then((value)=>{
 },(reason)=>{
    return reason
 })
-/*promise2.then().then().then().then().then().then((res)=>{
+/!*promise2.then().then().then().then().then().then((res)=>{
    MyPromise.resolve(MyPromise.resolve(res))
 }).catch((error)=>{
     console.log('Error:'+error)
 }).then(res=>{
     console.log('resolve:'+res)
-})*/
-/*const resolved = MyPromise.resolve(2);
+})*!/
+/!*const resolved = MyPromise.resolve(2);
 resolved.then(val => {
     console.log('resolved', val)
 }).finally(res=>{
@@ -41,7 +43,7 @@ rejected.catch(val => {
     console.log('reject', val)
 }).finally(res=>{
     console.log('finally'+res)
-})*/
+})*!/
 const resolved = MyPromise.resolve(1);
 const rejected = MyPromise.reject(-1);
 const resolved1 = MyPromise.resolve(17);
@@ -54,6 +56,7 @@ p.then((result) => {
     console.log('err1', err)
 }).finally((res) => {
     console.log('finally'+res)
-})
+})*/
 /*const p =MyPromise.deferred()
 console.log(p)*/
+
