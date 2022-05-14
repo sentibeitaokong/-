@@ -152,9 +152,13 @@ class MyPromise{
         return new MyPromise((resolve,reject)=> {
             let resultArr = []
             let orderIndex = 0;
+<<<<<<< HEAD
             if (!isIterable(values)) {
                     throw new TypeError(`${values} is not iterable (cannot read property Symbol(Symbol.iterator))`);
             }
+=======
+            values=Array.isArray(values)?values:[]
+>>>>>>> Object手写
             let len=values.length
             if(len===0){
                 resolve([])
@@ -167,7 +171,11 @@ class MyPromise{
                 }
             }
             values.forEach((value,i)=>{
+<<<<<<< HEAD
                 if(isPromise(value)){
+=======
+                if(value && typeof value.then === 'function'){
+>>>>>>> Object手写
                     value.then(value=>{
                         processResultByKey(value,i)
                     },reject)
@@ -180,6 +188,7 @@ class MyPromise{
     static any(values){
         return new MyPromise((resolve,reject)=>{
             let count=0
+<<<<<<< HEAD
             let len=values.length
             if(len===0){
                 resolve([])
@@ -199,18 +208,30 @@ class MyPromise{
                     resolve(item);
                 }
                 /*item.then(value=>{
+=======
+            if(values.length===0){
+                reject(new Error('All promises were rejected'))
+            }
+            values.forEach((item,i)=>{
+                item.then(value=>{
+>>>>>>> Object手写
                     resolve(value)
                 },reason=>{
                     count++
                     if(count===values.length){
                         reject(new Error('All promises were rejected'))
                     }
+<<<<<<< HEAD
                 })*/
+=======
+                })
+>>>>>>> Object手写
             })
         })
     }
     static race(values){
         return new MyPromise((resolve,reject)=>{
+<<<<<<< HEAD
             if (!isIterable(values)) {
                 throw new TypeError(`${values} is not iterable (cannot read property Symbol(Symbol.iterator))`);
             }
@@ -220,6 +241,11 @@ class MyPromise{
                 }else{
                     resolve(value);
                 }
+=======
+            values=Array.isArray(values)?values:[]
+            values.forEach(value=>{
+                value.then(resolve,reject)
+>>>>>>> Object手写
             })
         })
     }
@@ -235,9 +261,13 @@ class MyPromise{
         return new MyPromise((resolve,reject)=>{
             const result=[]
             let count=0
+<<<<<<< HEAD
             if (!isIterable(values)) {
                 throw new TypeError(`${values} is not iterable (cannot read property Symbol(Symbol.iterator))`);
             }
+=======
+            values=Array.isArray(values)?values:[]
+>>>>>>> Object手写
             let len=values.length
             if(len===0){
                 resolve([])
@@ -254,7 +284,11 @@ class MyPromise{
             }
 
             values.forEach((item,i)=>{
+<<<<<<< HEAD
                 if(isPromise(item)){
+=======
+                if(item && typeof item.then === 'function'){
+>>>>>>> Object手写
                     item.then(res=>{
                         addData('Fulfilled',res,i)
                     },reason=>{
@@ -267,6 +301,7 @@ class MyPromise{
         })
     }
 }
+<<<<<<< HEAD
 function isPromise (x) {
   if ((typeof x === 'object' && x !== null) || typeof x === 'function') {
     let then = x.then;
@@ -278,3 +313,6 @@ function isIterable (value) {
   return value !== null && value !== undefined && typeof value[Symbol.iterator] === 'function';
 }
 module.exports=MyPromise
+=======
+module.exports=MyPromise
+>>>>>>> Object手写
