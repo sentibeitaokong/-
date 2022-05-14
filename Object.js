@@ -115,6 +115,59 @@ MyObject.create = function (proto, propertiesObject) {
     return obj
 };
 
+//object.freeze()  功能：可以冻结一个对象。一个被冻结的对象再也不能被修改；
+// 冻结了一个对象则不能向这个对象添加新的属性，不能删除已有属性，不能修改该对象已有属性的可枚举性、可配置性、可写性，
+// 以及不能修改已有属性的值。此外，冻结一个对象后该对象的原型引用也不能被修改。freeze() 返回和传入的参数相同的对象。
+//不可修改、不可删除、不可添加
+//实现深冻结   对应函数Object.isFrozen()判断对象是否被冻结
+MyObject.deepFreeze=function(o){
+    //取出当前对象中的所有属性（包括不可枚举属性，排除Symbol属性）
+    let _keys=Object.getOwnPropertyNames(o)
+    if(_keys.length){
+        _keys.forEach(item=>{
+            var _value=o[item]
+            if(typeof _value==='object' && _value!==null){
+                MyObject.deepFreeze(_value)
+            }
+        })
+    }
+    return Object.freeze(o)
+}
+
+//object.Seal()     功能：封闭一个对象，阻止添加新属性并将所有现有属性标记为不可配置。当前属性的值只要原来是可写的就可以改变。
+//可修改、不可删除、不可添加
+//实现深密封    对应函数Object.isSealed()判断对象是否被密封
+MyObject.deepSeal=function(o){
+    //取出当前对象中的所有属性（包括不可枚举属性，排除Symbol属性）
+    let _keys=Object.getOwnPropertyNames(o)
+    if(_keys.length){
+        _keys.forEach(item=>{
+            var _value=o[item]
+            if(typeof _value==='object' && _value!==null){
+                MyObject.deepSeal(_value)
+            }
+        })
+    }
+    return Object.seal(o)
+}
+
+//object.preventExtensions()     功能：让一个对象变的不可扩展，也就是永远不能再添加新的属性。
+//可修改、可删除、不可添加
+//实现深不可扩展   对应函数Object.isFrozen()判断对象是否不可扩展(不可添加)
+MyObject.deepPreventExtensions=function(o){
+    //取出当前对象中的所有属性（包括不可枚举属性，排除Symbol属性）
+    let _keys=Object.getOwnPropertyNames(o)
+    if(_keys.length){
+        _keys.forEach(item=>{
+            var _value=o[item]
+            if(typeof _value==='object' && _value!==null){
+                MyObject.deepPreventExtensions(_value)
+            }
+        })
+    }
+    return Object.preventExtensions(o)
+}
+
 module.exports=MyObject
 
 

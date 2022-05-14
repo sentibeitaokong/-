@@ -85,7 +85,7 @@ console.log(a.__proto__ === Object.prototype); // false
 console.log(a instanceof Object);//false*/
 
 //检测propertiesObject是否可用
-var bb = MyObject.create(null, {
+/*var bb = MyObject.create(null, {
     a: {
         value: 2,
         writable: true,
@@ -95,10 +95,10 @@ var bb = MyObject.create(null, {
 console.log(bb.a); // 2
 console.log(bb.__proto__); // undefined
 console.log(bb.__proto__ === Object.prototype); // false
-console.log(bb instanceof Object) //false
+console.log(bb instanceof Object) //false*/
 
 //检验是否继承且在当前对象下添加自身属性
-var cc = MyObject.create({b: 1}, {
+/*var cc = MyObject.create({b: 1}, {
     a: {
         value: 3,
         writable: true,
@@ -109,4 +109,53 @@ console.log(cc.a); // 3
 console.log(cc.hasOwnProperty('a'), cc.hasOwnProperty('b')); // true false 说明第二个参数设置的是新对象自身可枚举的属性
 console.log(cc.__proto__); // {b: 1} 新对象cc的__proto__指向{b: 1}
 console.log(cc.__proto__ === Object.prototype); // false
-console.log(cc instanceof Object); // true cc是对象，原型链上肯定会出现Object
+console.log(cc instanceof Object); // true cc是对象，原型链上肯定会出现Object*/
+
+
+/*// 检测深冻结 不可删除、不可修改、不可扩展(可以添加属性)
+let obj={
+    a:1,
+    b:2,
+    c:{
+        d:4
+    }
+}
+Object.prototype.c=4
+// Object.freeze(obj)
+MyObject.deepFreeze(obj)
+obj.c.d=5
+obj.c.e=1
+delete obj.c.d
+console.log(obj)*/
+
+/*// 检测深密封  不可删除、可修改、不可扩展(可以添加属性)
+let obj={
+    a:1,
+    b:2,
+    c:{
+        d:4
+    }
+}
+Object.prototype.c=4
+// Object.freeze(obj)
+MyObject.deepSeal(obj)
+obj.c.d=5
+obj.c.e=1
+delete obj.c.d
+console.log(obj)*/
+
+// 检测深不可扩展   可删除、可修改、不可扩展(可以添加属性)
+let obj={
+    a:1,
+    b:2,
+    c:{
+        d:4
+    }
+}
+Object.prototype.c=4
+// Object.freeze(obj)
+MyObject.deepPreventExtensions(obj)
+obj.c.d=5
+obj.c.e=1
+delete obj.c.d
+console.log(obj)
