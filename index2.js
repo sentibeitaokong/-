@@ -145,7 +145,7 @@ delete obj.c.d
 console.log(obj)*/
 
 // 检测深不可扩展   可删除、可修改、不可扩展(可以添加属性)
-let obj={
+/*let obj={
     a:1,
     b:2,
     c:{
@@ -158,4 +158,10 @@ MyObject.deepPreventExtensions(obj)
 obj.c.d=5
 obj.c.e=1
 delete obj.c.d
-console.log(obj)
+console.log(obj)*/
+
+
+function foo2(x){
+    console.log(arguments)
+    return x
+}(1,2,3,4,5)

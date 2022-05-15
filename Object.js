@@ -153,7 +153,7 @@ MyObject.deepSeal=function(o){
 
 //object.preventExtensions()     功能：让一个对象变的不可扩展，也就是永远不能再添加新的属性。
 //可修改、可删除、不可添加
-//实现深不可扩展   对应函数Object.isFrozen()判断对象是否不可扩展(不可添加)
+//实现深不可扩展   对应函数Object.isExtensions()判断对象是否不可扩展(不可添加)
 MyObject.deepPreventExtensions=function(o){
     //取出当前对象中的所有属性（包括不可枚举属性，排除Symbol属性）
     let _keys=Object.getOwnPropertyNames(o)
