@@ -1,8 +1,9 @@
 // Object方法测试
 
 
-const MyObject=require('./Object')
-
+// const MyObject=require('./Object')
+const {clone,deepClone}=require('./methods')
+const Array=require('./Array')
 //object.is()
 // console.log(MyObject.is(NaN,NaN))
 
@@ -160,8 +161,14 @@ obj.c.e=1
 delete obj.c.d
 console.log(obj)*/
 
+//
+const obj = {
+    a: 1
+}
+obj.obj = obj
 
-function foo2(x){
-    console.log(arguments)
-    return x
-}(1,2,3,4,5)
+const newObj = deepClone(obj)
+
+console.log('原来的对象', obj)
+console.log('新的对象', newObj)
+
