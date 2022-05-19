@@ -4,10 +4,10 @@ const Array=require('./Array')
 
 
 //push方法
-let obj=[1,2,3]
+let obj=[1,2,3,3,3,3,3,2]
 // console.log(obj.__proto__.constructor)
-let obj1=obj.myPop()
-console.log(obj,obj1)
+let obj1=obj.unique()
+console.log(obj1)
 
 
 
