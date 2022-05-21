@@ -2,8 +2,9 @@
 
 
 // const MyObject=require('./Object')
-const {clone,deepClone}=require('./methods')
-const Array=require('./Array')
+const methods=require('./methods')
+// const Array=require('./Array')
+// const Function=require('./Function')
 //object.is()
 // console.log(MyObject.is(NaN,NaN))
 
@@ -162,7 +163,7 @@ delete obj.c.d
 console.log(obj)*/
 
 //
-const obj = {
+/*const obj = {
     a: 1
 }
 obj.obj = obj
@@ -170,5 +171,16 @@ obj.obj = obj
 const newObj = deepClone(obj)
 
 console.log('原来的对象', obj)
-console.log('新的对象', newObj)
+console.log('新的对象', newObj)*/
+var myInstance=methods.myInstaceOf
+function Car(make, model, year) {
+    this.make = make
+    this.model = model
+    this.year = year
+}
+const auto = new Car('Honda', 'Accord', 1998);
 
+console.log(myInstance(auto,Car));
+// expected output: true
+
+console.log(myInstance({},Object));
