@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div style="width: 400px;height: 400px;background: red" class="box"></div>
+    <script type="text/javascript">
+        function debounce(fn,wait,immediate) {
+            var t=null,result
+            var debounced=function () {
+                var self=this
+                var args=arguments
+                if(t){
+                    clearTimeout(t)
+                }
+                if(immediate){
+                    var callNow=!t
+                    t=setTimeout(function () {
+                        t=null
+                    },wait)
+                    if(callNow){
+                        result = fn.apply(self,args)
+                    }
+                }else{
+                    t=setTimeout(function () {
+                        result = fn.apply(self,args)
+                    },wait)
+                }
+                return result
+            }
+            debounced.cancel=function () {
+                clearTimeout(t)
+                t=null
+            }
+            return debounced
+        }
+        function throttle(fn,wait){
+            var t=null
+            var previous=0
+            var throttled= function () {
+                var self=this
+                var args=arguments
+                var now =+new Date()
+                //
+                var remaining=wait-(now-previous)
+                if(remaining<=0||remaining>wait){
+                    if(t){
+                        clearTimeout(t)
+                        t=null
+                    }
+                    previous=now
+                    fn.apply(self,args)
+                }else if(!t){
+                    t=setTimeout(function () {
+                        previous=+new Date()
+                        t=null
+                        fn.apply(self,args)
+                    },remaining)
+                }
+            }
+            throttled.cancel=function () {
+                t=null
+                clearTimeout(t)
+                previous=0
+            }
+            return throttled
+        }
+        function test() {
+            console.log(1)
+        }
+        var oBox=document.getElementsByClassName('box')[0]
+        oBox.onmousemove=throttle(test,1000)
+    </script>
+</body>
+</html>

@@ -172,7 +172,7 @@ const newObj = deepClone(obj)
 
 console.log('原来的对象', obj)
 console.log('新的对象', newObj)*/
-var myInstance=methods.myInstaceOf
+/*var myInstance=methods.myInstaceOf
 function Car(make, model, year) {
     this.make = make
     this.model = model
@@ -183,4 +183,21 @@ const auto = new Car('Honda', 'Accord', 1998);
 console.log(myInstance(auto,Car));
 // expected output: true
 
-console.log(myInstance({},Object));
+console.log(myInstance({},Object));*/
+let obj={
+
+}
+obj.test=function(){
+    console.log(this)
+    var t1=function aa() {
+        console.log(this)
+        var t2=()=>{
+            console.log(this)
+        }
+        t2()
+    }
+    t1()
+}
+obj.test()
+
+
