@@ -81,14 +81,20 @@ var methods={
         }
         return debounced
     },
-    //throttle节流函数  功能：事件被触发，n秒之内只执行一次事件处理函数
-    throttle:function(fn,wait){
+    //throttle节流函数  功能：事件被触发，n秒之内只执行一次事件处理函数  leading:false禁用第一次执行   trailing:false禁用停止触发的回调
+    throttle:function(fn,wait,options){
         var t=null
         var previous=0
+        if(!options){
+            options={}
+        }
         var throttled= function () {
             var self=this
             var args=arguments
             var now =+new Date()
+            if(!previous&&options.leading===false){
+                previous=now
+            }
             //下次触发fn的剩余时间
             var remaining=wait-(now-previous)
             //如果没有剩余的时间或者改了系统时间
@@ -99,11 +105,17 @@ var methods={
                 }
                 previous=now
                 fn.apply(self,args)
-            }else if(!t){
+                if(!t){
+                    self=args=null
+                }
+            }else if(!t&&options.trailing!==false){
                 t=setTimeout(function () {
-                    previous=+new Date()
+                    previous=options.leading===false?0:+new Date()
                     t=null
                     fn.apply(self,args)
+                    if(!t){
+                        self=args=null
+                    }
                 },remaining)
             }
         }
