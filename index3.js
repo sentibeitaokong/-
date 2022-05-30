@@ -1,4 +1,4 @@
-const Array=require('./Array')
+const Array=require('./NativeJs/Array')
 
 //检测数组
 

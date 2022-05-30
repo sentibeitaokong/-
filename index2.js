@@ -2,7 +2,7 @@
 
 
 // const MyObject=require('./Object')
-const methods=require('./methods')
+const methods=require('./NativeJs/methods')
 // const Array=require('./Array')
 // const Function=require('./Function')
 //object.is()
