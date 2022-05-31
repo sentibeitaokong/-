@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>01-圣杯布局</title>
+    <!--    圣杯布局   原理：容器设置100%宽度，中间一栏左右padding200px，用来放置左右两栏，三栏浮动，左栏设置margin-left:-100%，
+    再相对定位left:-200px至左边栏，右栏设置margin-left:-200px，再相对定位right:-200px至右边栏-->
+
+    <style>
+        body{
+            padding: 0;
+            margin: 0;
+        }
+        .container{
+            width: 100%;
+            height: 200px;
+            padding: 0 200px;
+            box-sizing: border-box;
+            background-color: black;
+        }
+        .main{
+            width: 100%;
+            height: 100%;
+            background-color: yellow;
+            float: left;
+        }
+        .left,.right{
+            float: left;
+            width: 200px;
+            height: 100%;
+        }
+        .left{
+            background-color: red;
+            position: relative;
+            margin-left: -100%;
+            left: -200px;
+        }
+        .right{
+            background-color: aqua;
+            position: relative;
+            margin-left: -200px;
+            right: -200px;
+        }
+    </style>
+</head>
+<body>
+<!--容器-->
+<div class="container">
+    <div class="main">中间栏</div>
+    <div class="left">左边栏</div>
+    <div class="right">右边栏</div>
+</div>
+</body>
+</html>

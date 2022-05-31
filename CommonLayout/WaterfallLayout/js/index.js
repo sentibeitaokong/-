@@ -41,5 +41,22 @@
     var getMinIndex=function(arr){
         return arr.indexOf(Math.min.apply(null,arr))
     }
+    // 判断是否需要加载图片
+    var checkWillLoadImage=function (){
+        // 获取最后一个盒子
+        var allBox=document.getElementsByClassName("main");
+        var lastBox=allBox[allBox.length-1];
+
+        // 求出最后一个盒子自身高度的一半+offsetTop
+        var lastBoxTop=lastBox.offsetHeight*0.5+lastBox.offsetTop;
+
+        //求出屏幕的高度
+        var screenH=document.body.clientHeight||document.documentElement.clientHeight;
+
+        //求出页面偏离浏览器的高度
+        var scrollTop=scroll().top;
+
+        return lastBoxTop<=screenH+scrollTop;
+    }
     window.Waterfull=WaterFall
 })()
