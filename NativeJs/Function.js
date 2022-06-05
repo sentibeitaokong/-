@@ -1,6 +1,7 @@
 //call()方法
 Function.prototype.Mycall=function (context) {
-    var context=Object(context)||window;
+    //如果context是undefined或者Null就赋值为window,否则转换为对象
+    var context=context == undefined ? window : Object(context);
     context.fn=this
     var args=[]
     for(let i=0,len=arguments.length;i<len;i++){
@@ -13,7 +14,8 @@ Function.prototype.Mycall=function (context) {
 
 // apply方法
 Function.prototype.MyApply=function (context,arr) {
-    var context=Object(context)||window;
+    //如果context是undefined或者Null就赋值为window,否则转换为对象
+    var context=context == undefined ? window : Object(context);
     context.fn=this
     var result
     // 当arr传参不是对象或者方法时，就报错

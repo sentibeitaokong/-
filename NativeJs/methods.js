@@ -3,6 +3,7 @@ var methods={
     clone:function(target) {
         let newTarget={}
         for( let prop in target){
+            // 筛选自身可枚举属性
             if(target.hasOwnProperty(prop)){
                 newTarget[prop]=target[prop]
             }
@@ -33,6 +34,7 @@ var methods={
         var constructor=Array.prototype.shift.call(arguments)
         obj.__proto__=constructor.prototype
         var ret=constructor.apply(obj,arguments)
+        // 如果构造函数中return 了对象则返回对象
         return typeof ret==='object'?ret:obj
     },
     //instaceOf方法

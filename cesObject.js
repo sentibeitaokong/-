@@ -2,7 +2,7 @@
 
 
 // const MyObject=require('./Object')
-const methods=require('./NativeJs/methods')
+const Function=require('./NativeJs/Function')
 // const Array=require('./Array')
 // const Function=require('./Function')
 //object.is()
@@ -184,7 +184,7 @@ console.log(myInstance(auto,Car));
 // expected output: true
 
 console.log(myInstance({},Object));*/
-let obj={
+/*let obj={
 
 }
 obj.test=function(){
@@ -198,6 +198,6 @@ obj.test=function(){
     }
     t1()
 }
-obj.test()
+obj.test()*/
 
 
