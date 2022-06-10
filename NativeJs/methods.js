@@ -49,6 +49,16 @@ var methods={
             }
             proto=proto.__proto__
         }
+       // MDN
+       /* while (target != null) {
+            if (target == origin.prototype)
+                return true;
+            if (typeof object == 'xml') {
+                return origin.prototype == XML.prototype;  //应对XML对象
+            }
+            target = target.__proto__;
+        }
+        return false;*/
     },
     //debounce防抖函数    功能：n秒内只要你触发事件，就重新计时，事件处理函数的程序将永远不能被执行.
     debounce:function (fn,wait,immediate) {
