@@ -189,10 +189,80 @@ arr1.flatMap(x => [[x * 2]]);
 // [[2], [4], [6], [8]]*/
 
 // forEach方法测试
-const arraySparse = [1,3,,7];
+/*const arraySparse = [1,3,7];
 let numCallbackRuns = 0;
 
-arraySparse.forEach(function(element){
+arraySparse.MyforEach(function(element){
     console.log(element);
     numCallbackRuns++;
-});
+},undefined);*/
+
+//from方法测试
+/*const map = new Map([[1, 2], [2, 4], [4, 8]]);
+console.log(Array.prototype.Myfrom([1, 2, 3], x => x + x))*/
+
+//includes方法测试
+/*console.log([1, 2, 3].Myincludes(2))     // true
+console.log([1, 2, 3].Myincludes(4))    // false
+console.log([1, 2, 3].Myincludes(3, 3))  // false
+console.log([1, 2, 3].Myincludes(3, -1)) // true
+console.log([1, 2, NaN].Myincludes(NaN)) // true*/
+
+//indexOf方法测试
+/*var indices = [];
+var array = ['a', 'b', 'a', 'c', 'a', 'd'];
+var element = 'a';
+var idx = array.MyindexOf(element);
+while (idx != -1) {
+    indices.push(idx);
+    idx = array.MyindexOf(element, idx + 1);
+}
+console.log(indices);
+function updateVegetablesCollection (veggies, veggie) {
+    if (veggies.MyindexOf(veggie) === -1) {
+        veggies.push(veggie);
+        console.log('New veggies collection is : ' + veggies);
+    } else if (veggies.MyindexOf(veggie) > -1) {
+        console.log(veggie + ' already exists in the veggies collection.');
+    }
+}
+
+var veggies = ['potato', 'tomato', 'chillies', 'green-pepper'];
+
+// New veggies collection is : potato,tomato,chillies,green-papper,spinach
+updateVegetablesCollection(veggies, 'spinach');
+// spinach already exists in the veggies collection.
+updateVegetablesCollection(veggies, 'spinach');*/
+
+//isArray方法测试
+/*console.log(Array.MyisArray([]))
+console.log(Array.MyisArray([1]))
+console.log(Array.MyisArray(new Array()))
+console.log(Array.MyisArray(new Array('a', 'b', 'c', 'd')))
+// 鲜为人知的事实：其实 Array.prototype 也是一个数组。
+console.log(Array.MyisArray(Array.prototype))*/
+
+// 下面的函数调用都返回 false
+/*console.log(Array.MyisArray())
+console.log(Array.MyisArray({}))
+console.log(Array.MyisArray(null))
+console.log(Array.MyisArray(undefined))
+console.log(Array.MyisArray(17))
+console.log(Array.MyisArray('Array'))
+console.log(Array.MyisArray(true))
+console.log(Array.MyisArray(false))
+console.log(Array.MyisArray(new Uint8Array(32)))
+console.log(Array.MyisArray({ __proto__: Array.prototype }))*/
+
+
+//join方法测试
+var a = ['Wind', 'Rain', 'Fire'];
+var myVar1 = a.Myjoin();      // myVar1 的值变为"Wind,Rain,Fire"
+var myVar2 = a.Myjoin(', ');  // myVar2 的值变为"Wind, Rain, Fire"
+var myVar3 = a.Myjoin(' + '); // myVar3 的值变为"Wind + Rain + Fire"
+var myVar4 = a.Myjoin('');
+console.log(myVar1)
+console.log(myVar2)
+console.log(myVar3)
+console.log(myVar4)
+

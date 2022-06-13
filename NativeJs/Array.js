@@ -160,7 +160,13 @@ Array.prototype.Myevery=function (fn,thisArg){
     const O = Object(this)
     const len = O.length >>> 0
     for(let i=0;i<len;i++){
-        if (!fn.call(thisArg,this[i],i,this)) {
+        let res
+        if(typeof thisArg === 'undefined'){
+            res=fn(this[i],i,this)
+        }else{
+            res=fn.call(thisArg,this[i],i,this)
+        }
+        if (!res) {
             return false
         }
     }
@@ -228,7 +234,12 @@ Array.prototype.Myfilter=function (fn,thisArg){
     const len = O.length >>> 0
     let result=[]
     for(let i=0;i<len;i++){
-        let res=fn.call(thisArg,this[i],i,this)
+        let res
+        if(typeof thisArg === 'undefined'){
+            res=fn(this[i],i,this)
+        }else{
+            res=fn.call(thisArg,this[i],i,this)
+        }
         if(res){
             result.push(this[i])
         }
@@ -251,7 +262,12 @@ Array.prototype.Myfind=function (fn,thisArg){
     const O = Object(this)
     const len = O.length >>> 0
     for(let i=0;i<len;i++){
-        let res=fn.call(thisArg,this[i],i,this)
+        let res
+        if(typeof thisArg === 'undefined'){
+            res=fn(this[i],i,this)
+        }else{
+            res=fn.call(thisArg,this[i],i,this)
+        }
         if(res){
             return this[i]
         }
@@ -273,7 +289,12 @@ Array.prototype.MyfindIndex=function (fn,thisArg){
     const O = Object(this)
     const len = O.length >>> 0
     for(let i=0;i<len;i++){
-        let res=fn.call(thisArg,this[i],i,this)
+        let res
+        if(typeof thisArg === 'undefined'){
+            res=fn(this[i],i,this)
+        }else{
+            res=fn.call(thisArg,this[i],i,this)
+        }
         if(res){
             return i
         }
@@ -319,10 +340,143 @@ Array.prototype.MyforEach=function (fn,thisArg){
     const O = Object(this)
     const len = O.length >>> 0
     for(let i=0;i<len;i++){
-        fn.call(thisArg,this[i],i,this)
+        if(typeof thisArg === 'undefined'){
+            fn(this[i],i,this)
+        }else{
+            fn.call(thisArg,this[i],i,this)
+        }
     }
     return undefined
 }
+//from方法   功能：对一个类似数组或可迭代对象创建一个新的，浅拷贝的数组实例。
+//Array.from(arrayLike[, mapFn[, thisArg]])
+// 参数：arrayLike想要转换成数组的伪数组对象或可迭代对象,mapFn 可选如果指定了该参数，新数组中的每个元素会执行该回调函数,thisArg 可选参数，执行回调函数 mapFn 时 this 对象。
+// from() 的 length 属性为 1 ，即 Array.from.length === 1。
+Array.Myfrom=(function() {
+    const isCallable = function(fn) {
+        return typeof fn === 'function' && Object.prototype.toString.call(fn) === '[object Function]';
+    };
+    // 返回一个value的整数
+    const toInteger = function(value) {
+        const v = Number(value);
+        if (isNaN(v)) {
+            return 0;
+        }
+        // 0或者无穷大的数，直接返回
+        if (v === 0 || !isFinite(v)) {
+            return v;
+        }
+        return ( v > 0 ? 1 : -1 ) * Math.floor(Math.abs(v));
+    }
+    const maxSafeInteger = Math.pow(2, 53) - 1;
+    const toLength = function(value) {
+        const len = toInteger(value);
+        // len的最小值不能比0小。最大值不能比maxSafeInteger大。
+        return Math.min(Math.max(len, 0), maxSafeInteger);
+    }
+    return function (arrayLike/*, mapFn, thisArg*/) {
+        const C = this;
+        // 如果没有第一个参数，throw error。
+        if (arrayLike == null) {
+            throw new TypeError("Array.from requires an array-like object - not null or undefined");
+        }
+        const items = Object(arrayLike);
+        let thisArg = '';
+        const mapFn = arguments.length > 1 ? arguments[1] : void undefined;
+        if (typeof mapFn !== 'undefined') {
+            // 如果有第二个参数，判断是第二个参数类型如果不是构造函数，throw error
+            if (!isCallable(mapFn)) {
+                throw new TypeError("Array.from when provided mapFn must be a function");
+            }
+            if (arguments.length > 2) {
+                thisArg = arguments[2];
+            }
+        }
+        const len = toLength(items.length);
+        const arr = isCallable(C) ? Object(new C(len)) : new Array(len);
+        let i = 0;
+        var iValue
+        while(i < len) {
+            iValue = items[i];
+            if (mapFn) {
+                arr[i] = typeof thisArg === 'undefined' ? mapFn(iValue, i) : mapFn.call(thisArg, iValue, i);
+            } else {
+                arr[i] = iValue;
+            }
+            i++;
+        }
+        return arr;
+    }
+})();
 
+//includes方法   功能：用来判断一个数组是否包含一个指定的值，根据情况，如果包含则返回 true，否则返回 false。
+// 技术上来讲，includes() 使用 零值相等 算法来确定是否找到给定的元素。
+//arr.includes(valueToFind[, fromIndex])
+//如果 fromIndex 大于等于数组的长度，则将直接返回 false，且不搜索该数组。
+//如果 fromIndex 为负值，计算出的索引将作为开始搜索searchElement的位置。如果计算出的索引小于 0，则整个数组都会被搜索。
+//includes() 方法有意设计为通用方法。它不要求this值是数组对象，所以它可以被用于其他类型的对象 (比如类数组对象)
+Array.prototype.Myincludes=function(valueFind,fromIndex=0){
+    if (this == null) {
+        throw new TypeError('this is null or not defined')
+    }
+    const O = Object(this)
+    const len = O.length >>> 0
+    if(len===0){
+        return false
+    }
+    if(fromIndex<0){
+        fromIndex=len+fromIndex
+    }
+    function sameValueZero(x,y) {
+        return x === y || (typeof x === 'number' && typeof y === 'number' && isNaN(x) && isNaN(y));
+    }
+    for(let i=fromIndex;i<len;i++){
+        if(sameValueZero(O[i],valueFind)){
+            return true
+        }
+    }
+    return false
 
-module.exports = Array
+}
+
+//indexOf方法  功能：返回在数组中可以找到一个给定元素的第一个索引，如果不存在，则返回-1。
+Array.prototype.MyindexOf=function(valueFind,fromIndex=0){
+    if (this == null) {
+        throw new TypeError('this is null or not defined')
+    }
+    const O = Object(this)
+    const len = O.length >>> 0
+    if(fromIndex<0){
+        fromIndex=len+fromIndex
+    }
+    if(len===0||fromIndex>=len){
+        return -1
+    }
+
+    for(let i=fromIndex;i<len;i++){
+        if(O[i]===valueFind){
+            return i
+        }
+    }
+    return -1
+
+}
+
+// isArray方法   功能：确定传递的值是否是一个 Array。
+Array.MyisArray = function(arg) {
+    return Object.prototype.toString.call(arg) === '[object Array]';
+};
+//join方法   功能：将一个数组（或一个类数组对象）的所有元素连接成一个字符串并返回这个字符串。如果数组只有一个项目，那么将返回该项目而不使用分隔符。
+Array.prototype.Myjoin=function(char=','){
+    if (this == null) {
+        throw new TypeError('this is null or not defined')
+    }
+    const O = Object(this)
+    const len = O.length >>> 0
+    let result=this[0]||''
+    for(let i=0;i<len;i++){
+        result+=char+O[i]
+    }
+    return result
+}
+module.exports = Array;
