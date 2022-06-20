@@ -52,4 +52,4 @@ Function.prototype.MyBind=function (context) {
     return newFn
 }
 
-// NativeJs.exports=Function
+module.exports=Function
