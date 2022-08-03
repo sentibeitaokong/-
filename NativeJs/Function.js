@@ -4,7 +4,7 @@ Function.prototype.Mycall=function (context) {
     var context=context == undefined ? window : Object(context);
     context.fn=this
     var args=[]
-    for(let i=0,len=arguments.length;i<len;i++){
+    for(let i=1,len=arguments.length;i<len;i++){
         args.push(`arguments[${i}]`);
     }
     var result=eval(`context.fn(${args})`)
