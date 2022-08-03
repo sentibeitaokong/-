@@ -97,6 +97,8 @@ Array.prototype.myAt = function (index) {
  * concat方法 功能：用于合并两个或多个数组。此方法不会更改现有数组，而是返回一个新数组,浅拷贝现存数组old_array
  * concat将对象引用复制到新数组中。 原始数组old_array和新数组new_array都引用相同的对象。 也就是说，如果引用的对象被修改，则更改对于新数组和原始数组都是可见的。 这包括也是数组的数组参数的元素。
  * var new_array = old_array.concat(value1[, value2[, ...[, valueN]]])
+ * 内置的Symbol.isConcatSpreadable符号用于配置某对象作为Array.prototype.concat()方法的参数时是否展开其数组元素,数组对象默认设置为true,类数组对象默认设置为false。
+ * 当设置为true时，使用concat拼接数组时，默认展开一层数组元素，否则不展开
  */
 
 
