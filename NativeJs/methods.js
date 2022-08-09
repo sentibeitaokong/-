@@ -18,7 +18,7 @@ var methods = {
         if (target instanceof RegExp) return new RegExp(target)
         // if (target instanceof HTMLElement) return target // 处理 DOM元素
         if (typeof target !== 'object') return target
-        if (hash.get(target)) {
+        if (hash.has(target)) {
             return hash.get(target)
         }
         const cloneTarget = new target.constructor()
