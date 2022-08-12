@@ -189,7 +189,37 @@ var methods = {
             _difference.delete(elem);
         }
         return _difference;
-    }
+    },
+    //惰性函数
+    addEvent:function(type, el, fn, capture = false) {
+        // 重写函数
+        if (window.addEventListener) {
+            addEvent = function (type, el, fn, capture) {
+                el.addEventListener(type, fn, capture);
+            }
+        }
+        else if(window.attachEvent){
+            addEvent = function (type, el, fn) {
+                el.attachEvent('on' + type, fn);
+            }
+        }
+        // 执行函数，有循环爆栈风险
+        addEvent(type, el, fn, capture);
+    },
+    //函数柯里化
+    currying:function(fn, length) {
+        length = length || fn.length; 	// 注释 1
+        return function (...args) {			// 注释 2
+            return args.length >= length	// 注释 3
+                ? fn.apply(this, args)			// 注释 4
+                : currying(fn.bind(this, ...args), length - args.length) // 注释 5
+        }
+    },
+   /* const currying = fn =>
+        judge = (...args) =>
+            args.length >= fn.length
+                ? fn(...args)
+                : (...arg) => judge(...args, ...arg)*/
 };
 // json对象
 var JSON = {
@@ -234,5 +264,7 @@ var JSON = {
         };
     })()
 };
+
+
 
 module.exports = methods

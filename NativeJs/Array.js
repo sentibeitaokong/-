@@ -409,6 +409,15 @@ Array.prototype.Myflat=function (depth=1){
     })(this,depth)
     return result
 }
+//将数组扁平化并去除其中重复数据，最终得到一个升序且不重复的数组
+/*Array.prototype.flat= function() {
+    return [].concat(...this.map(item => (Array.isArray(item) ? item.flat() : [item])));
+}
+Array.prototype.unique = function() {
+    return [...new Set(this)]
+}
+const sort = (a, b) => a - b;
+console.log(arr.flat().unique().sort(sort)); // [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ]*/
 
 
 
