@@ -7,7 +7,18 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon cesArray.js -i ./data/"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "eslint --ext .js,.vue src"
+    }
+  },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "husky": "^8.0.1"
+  },
+  "devDependencies": {
+    "husky": "^8.0.1"
+  }
 }

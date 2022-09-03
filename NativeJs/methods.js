@@ -206,6 +206,7 @@ var methods = {
         // 执行函数，有循环爆栈风险
         addEvent(type, el, fn, capture);
     },
+
     //函数柯里化
     currying:function(fn, length) {
         length = length || fn.length; 	// 注释 1
@@ -220,6 +221,51 @@ var methods = {
             args.length >= fn.length
                 ? fn(...args)
                 : (...arg) => judge(...args, ...arg)*/
+    //尾递归斐波那契数列
+    fibonacci:function(n , ac1 = 1 , ac2 = 1) {
+        if( n <= 1 ) {return ac2}
+        return fibonacci(n - 1, ac2, ac1 + ac2);
+    },
+    /*Fibonacci2(100) // 573147844013817200000
+    Fibonacci2(1000) // 7.0330367711422765e+208
+    Fibonacci2(10000) // Infinity*/
+
+    //尾递归阶乘函数
+    factorial:function(n,total=1){
+        if(n===1){
+            return total
+        }
+        return factorial(n-1,n*total)
+    },
+    //递归转循环防止执行栈溢出   蹦床函数
+    /*tco:function(f) {
+        var value;
+        var active = false;
+        var accumulated = [];
+
+        return function accumulator() {
+            accumulated.push(arguments);
+            if (!active) {
+                active = true;
+                while (accumulated.length) {
+                    value = f.apply(this, accumulated.shift());
+                }
+                active = false;
+                return value;
+            }
+        };
+    },
+
+    var sum = tco(function(x, y) {
+        if (y > 0) {
+            return sum(x + 1, y - 1)
+        }
+        else {
+            return x
+        }
+    });
+
+    sum(1, 100000)*/
 };
 // json对象
 var JSON = {
