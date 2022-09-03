@@ -28,14 +28,14 @@ add(1)(2)(3); // 6
 add(1)(2)(3)(4); // 10*/
 
 
-/*function currying(fn,length){
+function currying(fn,length){
     length=length||fn.length
     return function (...args){
         if(args.length>=length){
             return fn.apply(this,args)
         }else{
             return currying(fn.bind(this,...args),length-args.length)
-        }
+
     }
 }
 const fn=currying(function (a,b,c){
@@ -44,7 +44,7 @@ const fn=currying(function (a,b,c){
 fn("a", "b", "c") // ["a", "b", "c"]
 fn("a", "b")("c") // ["a", "b", "c"]
 fn("a")("b")("c") // ["a", "b", "c"]
-fn("a")("b", "c")*/111
+fn("a")("b", "c")
 
 
 
