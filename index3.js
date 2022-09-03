@@ -28,7 +28,7 @@ add(1)(2)(3); // 6
 add(1)(2)(3)(4); // 10*/
 
 
-/*function currying(fn,length){
+function/* currying(fn,length){
     length=length||fn.length
     return function (...args){
         if(args.length>=length){
