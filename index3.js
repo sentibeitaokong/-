@@ -44,7 +44,7 @@ const fn=currying(function (a,b,c){
 fn("a", "b", "c") // ["a", "b", "c"]
 fn("a", "b")("c") // ["a", "b", "c"]
 fn("a")("b")("c") // ["a", "b", "c"]
-fn("a")("b", "c")*/
+fn("a")("b", "c")*/111
 
 
 

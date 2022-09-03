@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon cesArray.js -i ./data/"
+    "dev": "nodemon cesArray.js -i ./data/",
+    "lint": "eslint --ext .js,.vue src"
   },
   "husky": {
     "hooks": {
