@@ -46,9 +46,289 @@ fn("a", "b")("c") // ["a", "b", "c"]
 fn("a")("b")("c") // ["a", "b", "c"]
 fn("a")("b", "c")*/
 
+//call
+Function.prototype.Mycall=function(context){
+   var obj=context==undefined?window:Object(context)
+    let fn=Symbol()
+    obj[fn]=this
+    let args=[...arguments].slice(1)
+    let result=obj[fn](...args)
+    delete obj[fn]
+    return result
+}
+
+//apply
+// Function.prototype.MyApply=function (context,array) {
+//     var obj=context==undefined?window:Object(context)
+//     let fn=Symbol()
+//     obj[fn]=this
+//     let result
+//     if(!array){
+//         result=obj[fn]()
+//     }else{
+//         result=obj[fn](...array)
+//     }
+//     delete obj[fn]
+//     return result
+// }
+
+//bind
+/*Function.prototype.MyBind=function (context) {
+    let args=Array.prototype.slice.call(arguments,1)
+    let self=this
+    var fNOP=function () {
+
+    }
+    var newFn=function () {
+        let bindArgs=Array.prototype.slice.call(arguments)
+        return self.apply(this instanceof fNOP?this:context,args.concat(bindArgs))
+    }
+    fNOP.prototype=this.prototype
+    newFn.prototype=new fNOP()
+    return newFn
+}
+var value=2;
+var foo={
+    value:1
+}
+function bar(name,age){
+    this.habit='shopping';
+    console.log(this.value);
+    console.log(name);
+    console.log(age);
+}
+bar.prototype.friend='kevin';
+var bindFoo=bar.bind(foo,'daisy');
+var obj=new bindFoo('18')
+console.log(obj.habit);
+console.log(obj.friend);
 
 
+//new
+function newFactory(){
+    var obj=Object.create(null)
+    const Constructor=[].shift.call(arguments)
+    obj.__proto__=Constructor.prototype
+    var ret=Constructor.apply(obj,arguments)
+    return typeof ret==='object'?ret:obj
+}*/
 
 
+//防抖
+/*function debounce(func,wait){
+    var timeout
+    return function(){
+        var context=this
+        var args=arguments
+        clearTimeout(timeout)
+        timeout=setTimeout(function () {
+            func.apply(context,arguments)
+        },wait)
+    }
+}*/
+
+//节流
+/*function throttle(func,wait){
+    var timeout
+    return function () {
+        let context=this
+        let args=arguments
+        if(!timeout){
+            timeout=setTimeout(function () {
+                timeout=null
+                func.apply(context,args)
+            },wait)
+        }
+    }
+}*/
+
+//浅拷贝
+
+/*function clone(target){
+    if(typeof target!=='object'){
+        return
+    }
+    let newTarget=target instanceof Array?[]:{}
+    for(var obj in target){
+        if(target.hasOwnProperty(obj)){
+            newTarget[obj]=target[obj]
+        }
+    }
+    return newTarget
+}
+
+let arr=[1,[1,2]]
+let arr1=clone(arr)
+arr1[0]=2
+arr1[1][0]=2
+console.log(arr,arr1)*/
+
+//深拷贝
+/*function deepClone(target,hash=new WeakMap()){
+    if(target===null){
+        return target
+    }
+    if(target instanceof RegExp){
+        return new RegExp(target)
+    }
+    if(target instanceof Date){
+        return new Date(target)
+    }
+   /!* if(target instanceof HTMLElement){
+        return target
+    }*!/
+    if(typeof target!=='object'){
+        return target
+    }
+    if(hash.has(target)){
+        hash.get(target)
+    }
+    const cloneTarget=new target.constructor()
+    hash.set(target,cloneTarget)
+    Reflect.ownKeys(target).forEach(item=>{
+        cloneTarget[item]=deepClone(target[item],hash)
+    })
+    return cloneTarget
+}
+let arr=[1,[1,2]]
+let arr1=deepClone(arr)
+arr1[0]=2
+arr1[1][0]=2
+console.log(arr,arr1)*/
 
 
+//数组扁平化
+/*Array.prototype.Myflat=function (depth=1) {
+   const result=[];
+   (function eachFlat(arr,depth) {
+       arr.forEach(item=>{
+           if(Array.isArray(item)&&depth){
+               eachFlat(item,depth-1)
+           }else{
+               result.push(item)
+           }
+       })
+   })(this,depth);
+   return result
+}
+
+var arr=[1,[1,[2,3]]]
+console.log(arr.Myflat(1))*/
+
+
+//偏函数
+/*function add(a,b){
+    return a+b+this.value
+}
+var value=1
+var addOne=partial(add,1)
+var obj={
+    value:2,
+    addOne:addOne
+}
+console.log(obj.addOne(2))*/
+
+
+//函数组合
+/*function compose() {
+   var args=arguments
+    var start=args.length-1
+    return function () {
+        var i=start
+        var result=args[start].apply(this,arguments)
+        while(i--){
+            result=args[i].call(this,result)
+        }
+        return result
+    }
+}
+
+
+var toUpper=function (x) {
+    return x+'b'
+}
+var hello=function (x) {
+    return 'HELLO,'+x
+}
+var greet=compose(hello,toUpper)
+console.log(greet('kevin'))*/
+
+//函数记忆
+/*function memoize(func,hasher) {
+  var memoized=function(key){
+    var cache=memoized.cache
+    var address=''+(hasher?hasher.apply(this,arguments):key)
+    if(!cache[address]){
+      cache[address]=func.apply(this,arguments)
+    }
+    return cache[address]
+  }
+  memoized.cache={}
+  return memoized
+}
+
+
+var count=0;
+var fibnacci=function (n) {
+  count++
+  return n<2?n:fibnacci(n-1)+fibnacci(n-2);
+}
+fibnacci=memoize(fibnacci)
+for(var i=0;i<=10;i++){
+ fibnacci(i)
+}
+console.log(count)*/
+
+
+//函数递归
+/*function factorial(n,res){
+  if(n===1){
+   return res
+  }
+  return factorial(n-1,n*res)
+}
+function f(fn,m) {
+   return function (n) {
+     return fn.call(this,n,m)
+   }
+}
+var newFactorial=f(factorial,1)
+console.log(newFactorial(4))*/
+
+//乱序
+/*function shuffle(arr) {
+   let m=arr.length
+   while(m>1){
+     let index=Math.floor(Math.random()*m--);
+     [arr[index],arr[m]]=[arr[m],arr[index]]
+   }
+   return arr
+}
+console.log(shuffle([1,2,3,5]))*/
+
+
+//函数柯里化
+/*
+function curry1(fn,arity,args){
+    var arity=arity||fn.length;
+    var args=args||[];
+    return function () {
+        var newArgs=[].slice.call(arguments);
+        Array.prototype.push.apply(args,newArgs)
+        if(newArgs.length<arity){
+            arity=arity-newArgs.length
+            return curry1(fn,arity,args)
+        }
+        return fn.apply(this,args)
+    }
+
+}
+function add(a,b,c,d) {
+    return a*b*c*d
+}
+var addCurry=curry1(add)
+console.log(addCurry(1)(2)(3)(4,5))
+// console.log(addCurry(1,2)(3)(4,5))
+// console.log(addCurry(1,2,3)(4,5))
+// console.log(addCurry(1,2,3,4,5))
+*/

@@ -1,7 +1,10 @@
 var methods = {
     // 浅拷贝
     clone: function (target) {
-        let newTarget = {}
+        if(typeof target!=='object'){
+            return target
+        }
+        let newTarget=target instanceof Array?[]:{};
         for (let prop in target) {
             // 筛选自身可枚举属性
             if (target.hasOwnProperty(prop)) {
@@ -221,6 +224,54 @@ var methods = {
             args.length >= fn.length
                 ? fn(...args)
                 : (...arg) => judge(...args, ...arg)*/
+
+   curry:function(fn,arity,args){
+       var arity=arity||fn.length;
+       var args=args||[];
+       return function () {
+           var newArgs=[].slice.call(arguments);
+           Array.prototype.push.apply(args,newArgs);
+           if(newArgs.length<arity){
+               arity=arity-newArgs.length;
+               return curry(fn,arity,args)
+           }
+           return fn.apply(this,args);
+       }
+   },
+    //偏函数
+    partial:function(fn){
+        var args=[].slice.call(arguments,1)
+        return function () {
+            var newArgs=args.concat([].slice.call(arguments))
+            return fn.apply(this,newArgs)
+        }
+    },
+    //函数组合
+    compose:function(){
+        var args=arguments
+        var start=args.length-1
+        return function () {
+            var i=start
+            var result=args[start].apply(this,arguments)
+            while(i--){
+                result=args[i].call(this,result)
+            }
+            return result
+        }
+    },
+    //函数记忆
+    memoize:function(func,hasher){
+      var memoized=function(key){
+          var cache=memoized.cache
+          var address=''+(hasher?hasher.apply(this,arguments):key);
+          if(!cache[address]){
+              cache[address]=func.apply(this,arguments)
+          }
+          return cache[address]
+      }
+      memoized.cache={}
+      return memoized
+    },
     //尾递归斐波那契数列
     fibonacci:function(n , ac1 = 1 , ac2 = 1) {
         if( n <= 1 ) {return ac2}
@@ -236,6 +287,15 @@ var methods = {
             return total
         }
         return factorial(n-1,n*total)
+    },
+    //乱序  洗牌算法
+    shuffle:function(arr){
+        let m = arr.length;
+        while (m > 1){
+            let index = Math.floor(Math.random() * m--);
+            [arr[m] , arr[index]] = [arr[index] , arr[m]]
+        }
+        return arr;
     },
     //递归转循环防止执行栈溢出   蹦床函数
     /*tco:function(f) {
@@ -266,6 +326,20 @@ var methods = {
     });
 
     sum(1, 100000)*/
+
+    //for of 实现
+    forOf:function (obj,cb) {
+        let iterable,result
+        if(typeof obj[Symbol.iterator]!=='function'){
+            throw new TypeError(result+"is not iterable")
+        }
+        iterable=obj[Symbol.iterator]();
+        result=iterable.next()
+        while(!result.done){
+            cb(result.value);
+            result=iterable.next();
+        }
+    }
 };
 // json对象
 var JSON = {

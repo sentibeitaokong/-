@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon cesArray.js -i ./data/",
+    "dev": "nodemon index3.js -i ./data/"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "ISC"
 }
