@@ -29,7 +29,6 @@ Function.prototype.Mycall=function (context) {
     context[fn] = this; // changed
     let args = [...arguments].slice(1);
     let result = context.fn(...args);
-
     delete context.fn
     return result;
 }*/

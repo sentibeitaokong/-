@@ -272,6 +272,14 @@ var methods = {
       memoized.cache={}
       return memoized
     },
+    //函数重载
+    doAdd:function() {
+        if(arguments.length == 1) {
+            console.log(arguments[0] + 5);
+        } else if(arguments.length == 2) {
+            console.log(arguments[0] + arguments[1]);
+        }
+    },
     //尾递归斐波那契数列
     fibonacci:function(n , ac1 = 1 , ac2 = 1) {
         if( n <= 1 ) {return ac2}
@@ -326,7 +334,6 @@ var methods = {
     });
 
     sum(1, 100000)*/
-
     //for of 实现
     forOf:function (obj,cb) {
         let iterable,result
