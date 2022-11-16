@@ -4,3 +4,4 @@ function lastString(){
 }
 console.log(lastString('hello nowcoder'))
 console.log('123123123')
+console.log('12312312')
