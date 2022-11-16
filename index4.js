@@ -3,3 +3,4 @@ function lastString(){
     return obj[obj.length-1].length
 }
 console.log(lastString('hello nowcoder'))
+console.log('123123123')
