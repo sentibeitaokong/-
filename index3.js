@@ -9,24 +9,6 @@ let obj=[1,2,3,3,3,3,3,2]
 let obj1=obj.unique()
 console.log(obj1)*/
 const methods=require('./NativeJs/methods')
-
-//柯里化
-/*function add(a) {
-    function sum(b) { // 使用闭包
-        a = a + b; // 累加
-        return sum;
-    }
-    sum.toString = function() { // 重写toString()方法
-        return a;
-    }
-    return sum; // 返回一个函数
-}
-
-console.log(add(1)==1)
-add(1)(2);  // 3
-add(1)(2)(3); // 6
-add(1)(2)(3)(4); // 10*/
-
 /*
 function currying(fn,length){
     length=length||fn.length
@@ -47,7 +29,7 @@ fn("a")("b")("c") // ["a", "b", "c"]
 fn("a")("b", "c")*/
 
 //call
-Function.prototype.Mycall=function(context){
+/*Function.prototype.Mycall=function(context){
    var obj=context==undefined?window:Object(context);
    var fn=Symbol()
    obj[fn]=this
@@ -55,10 +37,10 @@ Function.prototype.Mycall=function(context){
    var result=obj[fn](...args)
    delete obj[fn]
    return result
-}
+}*/
 
 //apply
-Function.prototype.MyApply=function (context,array) {
+/*Function.prototype.MyApply=function (context,array) {
     var obj=context==undefined?window:Object(context)
     var fn=Symbol()
     obj[fn]=this
@@ -70,7 +52,7 @@ Function.prototype.MyApply=function (context,array) {
     }
     delete obj[fn]
     return result
-}
+}*/
 
 //bind
 /*Function.prototype.MyBind=function (context) {
@@ -86,8 +68,8 @@ Function.prototype.MyApply=function (context,array) {
     fNOP.prototype=this.prototype
     newFn.prototype=new fNOP()
     return newFn
-};
-var value=2;
+};*/
+/*var value=2;
 var foo={
     value:1
 }
@@ -97,6 +79,8 @@ function bar(name,age){
     console.log(name);
     console.log(age);
 }
+
+
 bar.prototype.friend='kevin';
 var bindFoo=bar.bind(foo,'daisy');
 var obj=new bindFoo('18')
@@ -114,6 +98,7 @@ console.log(obj.friend);*/
 }*/
 
 
+
 //防抖
 /*function debounce(func,wait){
     var timeout;
@@ -126,6 +111,7 @@ console.log(obj.friend);*/
        },wait)
     }
 }*/
+
 
 //节流
 /*function throttle(func,wait){
@@ -142,6 +128,7 @@ console.log(obj.friend);*/
    }
 }*/
 
+
 //浅拷贝
 
 /*function clone(target){
@@ -155,8 +142,9 @@ console.log(obj.friend);*/
         }
     }
     return newTarget
-}
+}*/
 
+/*
 let arr=[1,[1,2]]
 let arr1=clone(arr)
 arr1[0]=2
@@ -187,11 +175,13 @@ console.log(arr,arr1)*/
     })
     return newTarget
 
-}
-let arr=[1,[1,2]]
-let arr1=deepClone(arr)
+}*/
+
+/*let arr=[1,[1,2]]
+let arr1=deepclone(arr)
 arr1[0]=2
 arr1[1][0]=2
+arr1[1][1]=arr
 console.log(arr,arr1)*/
 
 
@@ -208,10 +198,10 @@ console.log(arr,arr1)*/
         })
     })(this,depth)
     return result
-}
+}*/
 
-var arr=[1,[1,[2,3]]]
-console.log(arr.Myflat(2))*/
+/*var arr=[1,[1,[2,3]]];
+console.log(arr.Myflat(2));*/
 
 
 //偏函数
@@ -221,9 +211,10 @@ console.log(arr.Myflat(2))*/
         var newArags=[].slice.call(arguments)
         return fn.apply(this,args.concat(newArags))
     }
-}
+}*/
 
-function add(a,b){
+
+/*function add(a,b){
     return a+b+this.value
 }
 var value=1
@@ -247,9 +238,9 @@ console.log(obj.addOne(2))*/
         }
         return result
     }
-}
+}*/
 
-
+/*
 var toUpper=function (x) {
     return x+'b'
 }
@@ -271,10 +262,20 @@ console.log(greet('kevin'))*/
     }
     memoized.cache={}
     return memoized
+}*/
+
+
+/*function add(a,b,c){
+    return a+b+c
 }
+var memoizeAdd=memoize(add,function () {
+    var args=[].slice.call(arguments)
+    return JSON.stringify(args)
+})
+console.log(memoizeAdd(1,2,3))
+console.log(memoizeAdd(1,2,4))*/
 
-
-var count=0;
+/*var count=0;
 var fibnacci=function (n) {
   count++
   return n<2?n:fibnacci(n-1)+fibnacci(n-2);
@@ -297,7 +298,9 @@ function f(fn,m) {
     return function (n) {
         return fn.call(this,n,m)
     }
-}
+}*/
+
+/*
 var newFactorial=f(factorial,1)
 console.log(newFactorial(4))*/
 
@@ -309,35 +312,55 @@ console.log(newFactorial(4))*/
         [arr[m],arr[index]]=[arr[index],arr[m]]
     }
     return arr
+}*/
+
+
+// console.log(shuffle([1,2,3,5]))
+
+
+//函数柯里化
+/*function curry1(fn,arity,args){
+    var arity=arity||fn.length;
+    var args=args||[];
+    return function () {
+        var newArgs=[].slice.call(arguments);
+        [].push.apply(args,newArgs)
+        if(newArgs.length<arity){
+            arity=arity-newArgs.length
+            return curry1(fn,arity,args)
+        }else{
+            return fn.apply(this,args)
+        }
+    }
+
+}*/
+
+
+/*function add(a,b,c,d) {
+    return a*b*c*d
 }
-console.log(shuffle([1,2,3,5]))*/
+var addCurry=curry1(add)
+console.log(addCurry(1)(2)(3)(4,5))*/
+// console.log(addCurry(1,2)(3)(4,5))
+// console.log(addCurry(1,2,3)(4,5))
+// console.log(addCurry(1,2,3,4,5))
+
+//累加柯里化
+/*function sum() {
+    var prevNum=[...arguments].reduce((a,b)=>{
+        return a+b
+    })
+    var result=function () {
+        return sum(...[...arguments,prevNum])
+    }
+    result.toString=function () {
+        return prevNum
+    }
+    return result
+}*/
 
 
-/*//函数柯里化
-// function curry1(fn,arity,args){
-//     var arity=arity||fn.length;
-//     var args=args||[];
-//     return function () {
-//         var newArgs=[].slice.call(arguments);
-//         [].push.apply(args,newArgs)
-//         if(newArgs.length<arity){
-//             arity=arity-newArgs.length
-//             return curry1(fn,arity,args)
-//         }else{
-//             return fn.apply(this,args)
-//         }
-//     }
-//
-// }
-// function add(a,b,c,d) {
-//     return a*b*c*d
-// }
-// var addCurry=curry1(add)
-// console.log(addCurry(1)(2)(3)(4,5))
-// // console.log(addCurry(1,2)(3)(4,5))
-// // console.log(addCurry(1,2,3)(4,5))
-// // console.log(addCurry(1,2,3,4,5))*/
-
+// console.log(sum(1,2)(3,4)(5)(6,7).toString());
 
 //对象添加迭代器
 /*let obj={
@@ -361,8 +384,9 @@ console.log(shuffle([1,2,3,5]))*/
             }
         }
     }
-}
-for(let i of obj){
+}*/
+
+/*for(let i of obj){
     console.log(i)
 }*/
 
@@ -392,11 +416,12 @@ for(let i of obj){
     oUl.onclick=function (ev) {
         var ev=ev||window.event
         var target=ev.target||ev.srcElement
-        if(target.nodeName.toUpperCase()==='li'){
+        if(target.nodeName.toLowerCase()==='li'){
             console.log(target.innerHTML)
         }
     }
 }*/
+
 
 
 //Object.is 底层实现
@@ -409,6 +434,7 @@ Object.Myis=function (a,b) {
 }
 console.log(Object.Myis(NaN,NaN))
 */
+
 
 /*var f=(
     function f(){
@@ -466,3 +492,77 @@ function getHttp(url) {
         })
     }
 }*/
+
+//观察者模式
+/*var observe={
+    update(){
+        console.log('update')
+    }
+}
+var subject={
+    observers:[],
+    subsribe(observer){
+      this.observers.push(observer)
+    },
+    notify(){
+        this.observers.forEach(item=>{
+            item.update()
+        })
+    }
+}
+subject.subsribe(observe)
+subject.notify()*/
+
+//发布订阅模式
+/*var publisher={
+    publish(pubsub){
+        pubsub.publish()
+    }
+}
+var pubsub={
+    subscribesr:[],
+    publish(){
+        this.subscribers.forEach(item=>{
+            item.update()
+        })
+    },
+    subscribe(pubsub){
+        this.subscribers.push(pubsub)
+    }
+}
+
+var subscriber={
+    update(){
+        console.log('update')
+    },
+    subscribe(pubsub){
+        pubsub.subscribe(this)
+    }
+}
+subscriber.subscribe(pubsub)
+publisher.publish(pubsub)*/
+
+
+function myInstaceOf(target, origin) {
+    let proto = target.__proto__
+    while (true) {
+        if (proto === null) {
+            return false
+        }
+        if (proto === origin.prototype) {
+            return true
+        }
+        proto = proto.__proto__
+    }
+    // MDN
+    /* while (target != null) {
+         if (target == origin.prototype)
+             return true;
+         if (typeof object == 'xml') {
+             return origin.prototype == XML.prototype;  //应对XML对象
+         }
+         target = target.__proto__;
+     }
+     return false;*/
+}
+
